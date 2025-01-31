@@ -56,4 +56,14 @@ public class SlotService {
         }
         return false;
     }
+
+    public Slot getFirstAvailableSlot() {
+        List<Slot> availableSlots = slotRepository.findAll();
+        for (Slot slot : availableSlots) {
+            if (!slot.isOccupied()) {
+                return slot;
+            }
+        }
+        return null;
+    }
 }

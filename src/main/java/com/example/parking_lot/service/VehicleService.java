@@ -3,6 +3,8 @@ package com.example.parking_lot.service;
 
 import com.example.parking_lot.model.Slot;
 import com.example.parking_lot.model.Vehicle;
+import com.example.parking_lot.model.VehicleExitLog;
+import com.example.parking_lot.repository.VehicleExitLogRepository;
 import com.example.parking_lot.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.List;
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
     private final SlotService slotService;
+    private final VehicleExitLogRepository vehicleExitLogRepository;
 
-    public VehicleService(VehicleRepository vehicleRepository, SlotService slotService) {
+    public VehicleService(VehicleRepository vehicleRepository, SlotService slotService, VehicleExitLogRepository vehicleExitLogRepository) {
         this.vehicleRepository = vehicleRepository;
         this.slotService = slotService;
+        this.vehicleExitLogRepository = vehicleExitLogRepository;
     }
 
     public Vehicle getVehicle(String vehicleNumber) {
@@ -68,6 +72,15 @@ public class VehicleService {
         slotService.freeSlot(String.valueOf(vehicle.getSlot()));
 
         vehicleRepository.delete(vehicle);
+
+        // Save vehicle exit log
+        VehicleExitLog exitLog = new VehicleExitLog();
+        exitLog.setVehicleNumber(vehicleNumber);
+        exitLog.setInTime(entryTime);
+        exitLog.setExitTime(exitTime);
+        exitLog.setTotalHours((int) totalHours);
+        exitLog.setTotalCharge(totalCharge);
+        vehicleExitLogRepository.save(exitLog);
 
         return "Vehicle " + vehicleNumber + " exited. Total Hours: " + totalHours + ", Charge: ₹" + totalCharge;
     }

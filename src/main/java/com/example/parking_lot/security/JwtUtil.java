@@ -23,15 +23,18 @@ public class JwtUtil {
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
-    public static String validateToken(String token) {
+    public String validateToken(String token) {
         try {
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
-                    .build();
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
             DecodedJWT decodedJWT = verifier.verify(token);
+
+            System.out.println("✅ Token Validated: " + decodedJWT.getSubject());
             return decodedJWT.getSubject();
         } catch (JWTVerificationException e) {
-            return null; // Invalid token
+            System.err.println("❌ JWT Verification Failed: " + e.getMessage());
+            return null;
         }
     }
+
 
 }

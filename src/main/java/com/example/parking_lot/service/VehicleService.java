@@ -48,7 +48,7 @@ public class VehicleService {
         vehicle.setSlot(availableSlot);
         vehicleRepository.save(vehicle);
 
-        slotService.occupySlot(String.valueOf(availableSlot));
+        slotService.occupySlot(String.valueOf(availableSlot.getSlotNumber()));
 
         return "Vehicle " + vehicleNumber + " added successfully to slot " + availableSlot.getSlotNumber() + "!";
     }

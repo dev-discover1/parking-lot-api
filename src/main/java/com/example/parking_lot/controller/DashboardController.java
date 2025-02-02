@@ -23,23 +23,35 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    @GetMapping("/exit-logs")
+    @GetMapping("/logs/exits")
     public List<VehicleExitLog> getExitLogs() {
         return dashboardService.getAllExitLogs();
     }
 
-    @GetMapping("/total-users-served")
+    @GetMapping("/users/served")
     public String getTotalUsersServed(@RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         long totalUsers = dashboardService.getTotalUsersServedOnDay(localDate);
         return "Total users served on " + date + ": " + totalUsers;
     }
 
-    @GetMapping("/total-revenue")
+    @GetMapping("/users/served/all")
+    public String getTotalUsersServedAllTime() {
+        long totalUsers = dashboardService.getTotalUsersServed();
+        return "Total users served till now: " + totalUsers;
+    }
+
+    @GetMapping("/revenue")
     public String getTotalRevenue(@RequestParam String startDate, @RequestParam String endDate) {
         LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
         LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
         double totalRevenue = dashboardService.getTotalRevenueInDateRange(start, end);
         return "Total revenue from " + startDate + " to " + endDate + ": ₹" + totalRevenue;
+    }
+
+    @GetMapping("/revenue/all")
+    public String getTotalRevenueAllTime() {
+        double totalRevenue = dashboardService.getTotalRevenue();
+        return "Total revenue till now: ₹" + totalRevenue;
     }
 }

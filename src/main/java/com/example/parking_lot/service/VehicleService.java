@@ -69,7 +69,7 @@ public class VehicleService {
         vehicle.setIsActive(false);
         vehicleRepository.save(vehicle);
 
-        slotService.freeSlot(String.valueOf(vehicle.getSlot()));
+        slotService.freeSlot(String.valueOf(String.valueOf(vehicle.getSlot().getSlotNumber())));
 
         vehicleRepository.delete(vehicle);
 

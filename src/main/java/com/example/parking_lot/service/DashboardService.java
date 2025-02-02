@@ -34,4 +34,15 @@ public class DashboardService {
         List<VehicleExitLog> exitLogs = vehicleExitLogRepository.findByExitTimeBetween(startOfRange, endOfRange);
         return exitLogs.stream().mapToDouble(VehicleExitLog::getTotalCharge).sum();
     }
+
+    public long getTotalUsersServed() {
+        return vehicleExitLogRepository.count();
+    }
+
+    public double getTotalRevenue() {
+        return vehicleExitLogRepository.findAll()
+                .stream()
+                .mapToDouble(VehicleExitLog::getTotalCharge)
+                .sum();
+    }
 }

@@ -6,6 +6,8 @@ import com.example.parking_lot.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthService {
     private final AdminRepository adminRepository;
@@ -14,6 +16,10 @@ public class AuthService {
     public AuthService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+    }
+
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
     }
 
     public String registerAdmin(String username, String password) {

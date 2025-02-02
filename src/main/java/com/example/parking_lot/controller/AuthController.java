@@ -1,10 +1,11 @@
 package com.example.parking_lot.controller;
 
+import com.example.parking_lot.model.Admin;
 import com.example.parking_lot.service.AuthService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,13 +16,22 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @GetMapping("/admins")
+    public List<Admin> getAllAdmins() {
+        return authService.getAllAdmins();
+    }
+
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password) {
+    public String register(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
         return authService.registerAdmin(username, password);
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public String login(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
         return authService.loginAdmin(username, password);
     }
 }

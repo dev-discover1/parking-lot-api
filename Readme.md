@@ -38,3 +38,60 @@ parking-lot-system
  └── README.md
 
 ```
+
+## Application Routes
+
+### TEST `/`
+- `GET` `/`
+- `GET` `/test-db`
+
+### ADMIN AUTH `/auth`
+
+- `GET` `auth/admins`
+
+- `POST` `auth/register`
+```json
+{
+  "username": "adminUsername",
+  "password": "adminPassword"
+}
+```
+- `POST` `auth/login`
+```json
+{
+  "username": "adminUsername",
+  "password": "adminPassword"
+}
+```
+
+### Dashboard `/dashboard`
+
+- `GET` `/dashboard/logs/exits`
+- `GET` `/dashboard/users/served?date={date}`
+- `GET` `/dashboard/users/served/all`
+- `GET` `/dashboard/revenue?startDate={startDate}&endDate={endDate}`
+- `GET` `/dashboard/revenue/all`
+- `DATE FORMAT` - `{YYYY-MM-DD}`
+
+### Slot `/slots`
+
+- `GET` `/slots`
+- `POST` `/slots/add?slotNumber={slotNumber}`
+- `POST` `/slots/occupy?slotNumber={slotNumber}`
+- `POST` `/slots/free?slotNumber={slotNumber}`
+- `POST` `/slots/delete?slotNumber={slotNumber}`
+- `slotNumber` - `For ex. S1`
+
+### Vehicle `/vehicles`
+- `GET` `/vehicles/{vehicleNumber}`
+- `GET` `/vehicles`
+- `POST` `/vehicles/entry?vehicleNumber={vehicleNumber}`
+- `POST` `/vehicles/exit?vehicleNumber={vehicleNumber}`
+- `vehicleNumber` - `For ex. MH12AB1234`
+
+### Security (Authenticated Routes)
+- `/dashboard/**`
+- `/slots/**`
+- `/auth/admins`
+- The above routes requires authentication pass the Token in Header format.
+- 

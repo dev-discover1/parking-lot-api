@@ -94,4 +94,8 @@ parking-lot-system
 - `/slots/**`
 - `/auth/admins`
 - The above routes requires authentication pass the Token in Header format.
-- 
+
+### APPLICATION RUNS ON PORT `http://localhost:8081/`
+
+#### NOTE-
+The application can be alternatively be run using the `run.sh` or `run.bat` scripts.
